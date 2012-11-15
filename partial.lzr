@@ -1,5 +1,6 @@
 **partial**
-  p.my-class.another Some text
+  p#some-id.my-class.another Some text
     img
 
   body
+

@@ -57,16 +57,17 @@ partial : PARTIAL;
 classname : ('.' (ANY_WORD | '-')+)+;
 htmlid : ('#' (ANY_WORD | '-')+);
 
+htmltag : ( HEAD | TITLE | META | BODY | DIV | P | IMG);	
 
 tagname : HTML
-          | indent ( HEAD | TITLE | META | BODY | DIV | P | IMG) htmlid? classname? SPACE?;
+          | indent htmltag htmlid? classname? SPACE?;
 
 
 block_text : CURLY_BLOCK_SCARF;
 line_text : (.)*;	
 
 tag 	
-	: partial? tagname (block_text | line_text)?;
+	: partial? tagname (block_text | line_text)? EOF?;
 
-template : tag+ BOL;
+template : tag+ BOL?;
 
