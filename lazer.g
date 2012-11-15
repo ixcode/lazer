@@ -19,10 +19,12 @@ WORD 	: CHAR+;
 
 indent 	: INDENT*;
 
-tagname : HTML | HEAD | TITLE | META | BODY | P;
+
+tagname : (HTML | HEAD | TITLE | META | BODY | P);
 
 content : (CHAR | SYMBOL | SPACE)+;
 
-tag 	: tagname NEWLINE?;
+tag 	: indent? tagname NEWLINE?;
 
 template : (tag)+;
+
