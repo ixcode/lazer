@@ -9,22 +9,34 @@ tokens {
   P='p';
 }
 
-CHAR 	: ('a'..'z' |'A'..'Z');
+ANY_WORD
+  :  ('a'..'z' | 'A'..'Z')+
+  ;
+
+WS  
+  :  ('\t') {$channel=HIDDEN;}
+  ;
+
+
+
 SPACE 	: ' ';
 SYMBOL  : ('!' | '"' | '$' | '£' | '%');
+
 INDENT  : SPACE SPACE;	
-NEWLINE	: ('\r'? '\n') | ('\r');
 
-WORD 	: CHAR+;
-
-indent 	: INDENT*;
+BOL	: ('\r' | '\n')+;
 
 
-tagname : (HTML | HEAD | TITLE | META | BODY | P);
 
-content : (CHAR | SYMBOL | SPACE)+;
+indent 	: BOL INDENT INDENT*;
 
-tag 	: indent? tagname NEWLINE?;
+tagname : HTML
+          | indent ( HEAD | TITLE | META | BODY | P) SPACE?;
 
-template : (tag)+;
+
+tagbody : .*;
+
+tag 	: tagname tagbody?;
+
+template : tag+;
 
