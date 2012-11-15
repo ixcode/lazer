@@ -1,6 +1,9 @@
 html
   head
-    title
-    meta
+    title {This is my title which  has some p stuff and other head tags}
   body
-    p
+    p {Here is my paragraph. I should be 
+able to put anything in here until it 
+
+matches the end braces!}
+    p {Heres another}

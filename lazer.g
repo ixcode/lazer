@@ -27,16 +27,30 @@ INDENT  : SPACE SPACE;
 BOL	: ('\r' | '\n')+;
 
 
-
 indent 	: BOL INDENT INDENT*;
+
+CURLY_BLOCK_SCARF
+    :   '{'
+        (
+            options {
+                greedy=false;
+            }
+        :   '\r' ('\n')? {newline();}
+        |   '\n'         {newline();}
+        |   .
+        )*
+        '}'
+    ;
+
 
 tagname : HTML
           | indent ( HEAD | TITLE | META | BODY | P) SPACE?;
 
 
-tagbody : .*;
+block_text : CURLY_BLOCK_SCARF;
 
-tag 	: tagname tagbody?;
+
+tag 	: tagname block_text?;
 
 template : tag+;
 
