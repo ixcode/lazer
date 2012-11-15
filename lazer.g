@@ -48,9 +48,10 @@ tagname : HTML
 
 
 block_text : CURLY_BLOCK_SCARF;
+line_text : (.)*;	
 
-
-tag 	: tagname block_text?;
+tag 	
+	: tagname (block_text | line_text)?;
 
 template : tag+;
 
