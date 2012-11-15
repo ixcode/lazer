@@ -41,14 +41,7 @@ indent 	: BOL INDENT INDENT*;
 
 CURLY_BLOCK_SCARF
     :   '{'
-        (
-            options {
-                greedy=false;
-            }
-        :   '\r' ('\n')? {newline();}
-        |   '\n'         {newline();}
-        |   .
-        )*
+         .*
         '}'
     ;
 
@@ -66,8 +59,9 @@ tagname : HTML
 block_text : CURLY_BLOCK_SCARF;
 line_text : (.)*;	
 
-tag 	
-	: partial? tagname (block_text | line_text)? EOF?;
+//tag : partial? tagname (line_text | block_text)? EOF?;
 
-template : tag+ BOL?;
+tag 	: partial? tagname block_text? EOF?;
+
+template : tag+ BOL*;
 
