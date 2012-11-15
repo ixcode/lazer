@@ -1,12 +1,21 @@
 grammar lazer;
 
 tokens {
+  PARTIAL='**partial**';
   HTML='html';
   HEAD='head';
   TITLE='title';
   META='meta';
   BODY='body';
+  DIV='div';
   P='p';
+  SPAN='span';
+  IMG='img';
+  SCRIPT='script';
+  UL='ul';
+  LI='li';
+  TR='tr';
+  TH='th';
 }
 
 ANY_WORD
@@ -16,6 +25,7 @@ ANY_WORD
 WS  
   :  ('\t') {$channel=HIDDEN;}
   ;
+
 
 
 
@@ -42,16 +52,17 @@ CURLY_BLOCK_SCARF
         '}'
     ;
 
+partial : PARTIAL;
 
 tagname : HTML
-          | indent ( HEAD | TITLE | META | BODY | P) SPACE?;
+          | indent ( HEAD | TITLE | META | BODY | DIV | P | IMG) SPACE?;
 
 
 block_text : CURLY_BLOCK_SCARF;
 line_text : (.)*;	
 
 tag 	
-	: tagname (block_text | line_text)?;
+	: partial? tagname (block_text | line_text)?;
 
-template : tag+;
+template : tag+ BOL;
 
