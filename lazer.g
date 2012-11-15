@@ -54,8 +54,10 @@ CURLY_BLOCK_SCARF
 
 partial : PARTIAL;
 
+classname : ('.' (ANY_WORD | '-')+)+;
+
 tagname : HTML
-          | indent ( HEAD | TITLE | META | BODY | DIV | P | IMG) SPACE?;
+          | indent ( HEAD | TITLE | META | BODY | DIV | P | IMG) classname? SPACE?;
 
 
 block_text : CURLY_BLOCK_SCARF;

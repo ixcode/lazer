@@ -1,5 +1,5 @@
 **partial**
-  p Some text
+  p.my-class.another Some text
     img
 
   body
