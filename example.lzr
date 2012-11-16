@@ -1,9 +1,15 @@
 html
   head
-    title This is my title which  has some p stuff and other head tags
+    title This is my title which has some p stuff and other head tags
   body
-    p {Here is my paragraph. I should be 
-able to put anything in here until it 
+    #main
+      p 
+        | Here is my paragraph. I should be 
+        | able to put anything in here until it 
+        span.bold This is in bold
+        | Here is some more stuff
+        a href="/foobar" This is a link
+        | And some more stuff
+        | With  more lines
 
-matches the end braces!}
-    p Heres another p title
+      p Heres another p title

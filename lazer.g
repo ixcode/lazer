@@ -50,18 +50,22 @@ partial : PARTIAL;
 classname : ('.' (ANY_WORD | '-')+)+;
 htmlid : ('#' (ANY_WORD | '-')+);
 
+
+	
+
 htmltag : ( HEAD | TITLE | META | BODY | DIV | P | IMG);	
 
 tagname : HTML
-          | indent htmltag htmlid? classname? SPACE?;
+          | indent htmltag htmlid? classname?;
 
 
 block_text : CURLY_BLOCK_SCARF;
-line_text : (.)*;	
+line_text 
+	: 
+	SPACE .*;	
 
-//tag : partial? tagname (line_text | block_text)? EOF?;
 
-tag 	: partial? tagname block_text? EOF?;
+tag 	: partial? tagname line_text;
 
 template : tag+ BOL*;
 
