@@ -1,26 +1,16 @@
 grammar lazer;
 
-tokens {
-  PARTIAL='**partial**';
-  HTML='html';
-  HEAD='head';
-  TITLE='title';
-  META='meta';
-  BODY='body';
-  DIV='div';
-  P='p';
-  SPAN='span';
-  IMG='img';
-  SCRIPT='script';
-  UL='ul';
-  LI='li';
-  TR='tr';
-  TH='th';
+options {
+  output=AST;  
 }
 
-ANY_WORD
-  :  ('a'..'z' | 'A'..'Z')+
-  ;
+tokens {
+  PARTIAL='**partial**';  
+}
+
+LOWERCASE_CHAR 	: 'a'..'z';
+UPPERCASE_CHAR  : 'A'..'Z';
+	
 
 WS  
   :  ('\t') {$channel=HIDDEN;}
@@ -30,42 +20,68 @@ WS
 
 
 SPACE 	: ' ';
-SYMBOL  : ('!' | '"' | '$' | '£' | '%');
-
-INDENT  : SPACE SPACE;	
+EQL 	: '=';	
+SYMBOL  : ('!'  | '$' | '£' | '%' | '.' | '/' | '\\' );
+	
 
 BOL	: ('\r' | '\n')+;
 
 
-indent 	: BOL INDENT INDENT*;
+//indent 	: BOL SPACE SPACE*;
 
-CURLY_BLOCK_SCARF
-    :   '{'
-         .*
-        '}'
-    ;
+//CURLY_BLOCK_SCARF
+  //  :   '{'
+  //       .*
+  //      '}'
+  //  ;
 
 partial : PARTIAL;
 
-classname : ('.' (ANY_WORD | '-')+)+;
-htmlid : ('#' (ANY_WORD | '-')+);
+//classname : ('.' ( | '-')+)+;
+//htmlid : ('#' (ANY_WORD | '-')+);
 
+//string 	: ANY_WORD+;
 
+string 	: (LOWERCASE_CHAR | UPPERCASE_CHAR | SYMBOL | SPACE)*;
+
+quotedstring
+	:
+	('"' | '\'')
+	string
+	('"' | '\'')
+	;
+
+name : LOWERCASE_CHAR+;
+value	:quotedstring;
 	
 
-htmltag : ( HEAD | TITLE | META | BODY | DIV | P | IMG);	
+htmltag : LOWERCASE_CHAR*;	
 
-tagname : HTML
-          | indent htmltag htmlid? classname?;
-
-
-block_text : CURLY_BLOCK_SCARF;
-line_text 
-	: 
-	SPACE .*;	
+//tagname : HTML
+//          | indent htmltag htmlid? classname?;
 
 
-tag 	: partial? tagname line_text;
+//block_text : CURLY_BLOCK_SCARF;
+//line_text 
+//	: 
+//	SPACE (ANY_WORD | SPACE)+;	
 
-template : tag+ BOL*;
+attribute 
+	:
+	SPACE 	
+	name
+	EQL
+	value
+	;
+
+attributes 
+	:
+	attribute*
+	;
+
+test	: attributes string EOF;	
+
+//tag 	: partial? tagname attributes? line_text;
+
+//template : tag+ BOL*;
 

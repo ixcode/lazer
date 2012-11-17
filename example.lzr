@@ -6,10 +6,17 @@ html
       p 
         | Here is my paragraph. I should be 
         | able to put anything in here until it 
+        br
         span.bold This is in bold
         | Here is some more stuff
         a href="/foobar" This is a link
         | And some more stuff
         | With  more lines
-
+        - date
+          span This only appears if valid
+        - else
+          span appears if not valid
+        = 
       p Heres another p title
+      ul
+        li#id.class:  a href="some/ref"
