@@ -80,9 +80,13 @@ attributes
 
 line_text : string;
 
-tagname	: BOL SPACE+ LOWERCASE_CHAR+ SPACE;
+indent 	: BOL SPACE*;
 
-test	: tagname attributes line_text EOF;	
+tagname	: indent name;
+
+tag	: tagname (SPACE attributes line_text)?;
+
+test	: tag* EOF;	
 
 //tag 	: partial? tagname attributes? line_text;
 
