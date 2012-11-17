@@ -67,8 +67,7 @@ htmltag : LOWERCASE_CHAR*;
 //	SPACE (ANY_WORD | SPACE)+;	
 
 attribute 
-	:
-	SPACE 	
+	:	 	
 	name
 	EQL
 	value
@@ -76,10 +75,14 @@ attribute
 
 attributes 
 	:
-	attribute*
+	(attribute SPACE)*
 	;
 
-test	: attributes string EOF;	
+line_text : string;
+
+tagname	: BOL SPACE+ LOWERCASE_CHAR+ SPACE;
+
+test	: tagname attributes line_text EOF;	
 
 //tag 	: partial? tagname attributes? line_text;
 
