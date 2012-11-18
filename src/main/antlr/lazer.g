@@ -35,11 +35,11 @@ quotedstring
 name : LOWERCASE_CHAR+;
 value	:quotedstring;
 
-htmlid : '#' (LOWERCASE_CHAR | UPPERCASE_CHAR | '-')+;	
+id : '#' (LOWERCASE_CHAR | UPPERCASE_CHAR | '-')+;	
 classname : '.' ( LOWERCASE_CHAR | UPPERCASE_CHAR | '-')+;
 classes	: classname+;
 
-htmltag : name? htmlid? classes?;	
+	
 	
 attribute 
 	:	 	
@@ -58,9 +58,7 @@ line_text
 
 indent 	: BOL SPACE*;
 
-tagname	: indent htmltag;
-
-tag	: tagname attributes line_text;
+tag	: indent name? id? classes? attributes line_text;
 
 template : (tag)+ EOF;
 
