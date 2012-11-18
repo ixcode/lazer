@@ -21,19 +21,8 @@ WS
 SPACE 	: ' ';
 EQL 	: '=';	
 SYMBOL  : ('!'  | '$' | '£' | '%' | '.' | '/' | '\\' );
-
-//WS_n : (options {greedy=false;} : ' '+) ;	
-
 BOL	: ('\r' | '\n')+;
 
-
-//indent 	: BOL SPACE SPACE*;
-
-//CURLY_BLOCK_SCARF
-  //  :   '{'
-  //       .*
-  //      '}'
-  //  ;
 
 
 //classname : ('.' ( | '-')+)+;
@@ -55,16 +44,7 @@ value	:quotedstring;
 	
 
 htmltag : LOWERCASE_CHAR*;	
-
-//tagname : HTML
-//          | indent htmltag htmlid? classname?;
-
-
-//block_text : CURLY_BLOCK_SCARF;
-//line_text 
-//	: 
-//	SPACE (ANY_WORD | SPACE)+;	
-
+	
 attribute 
 	:	 	
 	name
@@ -86,9 +66,6 @@ tagname	: indent name;
 
 tag	: tagname attributes line_text;
 
-test	: (tag)+ EOF;	
+template : (tag)+ EOF;	
 
-//tag 	: partial? tagname attributes? line_text;
-
-//template : tag+ BOL*;
 
