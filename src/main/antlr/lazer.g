@@ -60,8 +60,11 @@ indent 	: BOL SPACE*;
 
 tag	: indent name? id? classes? attributes line_text;
 
-template : (tag)+ EOF;
+control : indent '-' SPACE line_text;
+evaluate : indent '-' SPACE line_text;
 
-	
+template : (tag | control)+ EOF;
+
+test 	: control EOF;	
 
 
