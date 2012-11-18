@@ -23,13 +23,6 @@ EQL 	: '=';
 SYMBOL  : ('!'  | '$' | '£' | '%' | '.' | '/' | '\\' );
 BOL	: ('\r' | '\n')+;
 
-
-
-//classname : ('.' ( | '-')+)+;
-//htmlid : ('#' (ANY_WORD | '-')+);
-
-//string 	: ANY_WORD+;
-
 string 	: (LOWERCASE_CHAR | UPPERCASE_CHAR | SYMBOL | SPACE)*;
 
 quotedstring
@@ -41,9 +34,12 @@ quotedstring
 
 name : LOWERCASE_CHAR+;
 value	:quotedstring;
-	
 
-htmltag : LOWERCASE_CHAR*;	
+htmlid : '#' (LOWERCASE_CHAR | UPPERCASE_CHAR | '-')+;	
+classname : '.' ( LOWERCASE_CHAR | UPPERCASE_CHAR | '-')+;
+classes	: classname+;
+
+htmltag : name? htmlid? classes?;	
 	
 attribute 
 	:	 	
@@ -62,10 +58,12 @@ line_text
 
 indent 	: BOL SPACE*;
 
-tagname	: indent name;
+tagname	: indent htmltag;
 
 tag	: tagname attributes line_text;
 
-template : (tag)+ EOF;	
+template : (tag)+ EOF;
+
+	
 
 
