@@ -5,7 +5,6 @@ options {
 }
 
 tokens {
-  PARTIAL='**partial**';  
 }
 
 LOWERCASE_CHAR 	: 'a'..'z';
@@ -21,8 +20,9 @@ WS
 
 SPACE 	: ' ';
 EQL 	: '=';	
-SYMBOL  : ('!'  | '$' | '£' | '%' | '.' | '/' | '\\' );
-	
+SYMBOL  : ('!'  | '$' | 'Â£' | '%' | '.' | '/' | '\\' );
+
+//WS_n : (options {greedy=false;} : ' '+) ;	
 
 BOL	: ('\r' | '\n')+;
 
@@ -35,7 +35,6 @@ BOL	: ('\r' | '\n')+;
   //      '}'
   //  ;
 
-partial : PARTIAL;
 
 //classname : ('.' ( | '-')+)+;
 //htmlid : ('#' (ANY_WORD | '-')+);
@@ -75,18 +74,19 @@ attribute
 
 attributes 
 	:
-	(attribute SPACE)*
+	(SPACE attribute)*
 	;
 
-line_text : string;
+line_text 
+	: (options {greedy=false;} : string);
 
 indent 	: BOL SPACE*;
 
 tagname	: indent name;
 
-tag	: tagname (SPACE attributes line_text)?;
+tag	: tagname attributes line_text;
 
-test	: tag* EOF;	
+test	: (tag)+ EOF;	
 
 //tag 	: partial? tagname attributes? line_text;
 
