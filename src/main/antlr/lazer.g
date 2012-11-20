@@ -15,22 +15,27 @@ WS
   :  ('\t') {$channel=HIDDEN;}
   ;
 
-
-
-
 SPACE 	: ' ';
 EQL 	: '=';	
-SYMBOL  : ('!'  | '$' | '£' | '%' | '.' | '/' | '\\' );
+SYMBOL  : ('!'  | '$' | '£' | '%' | '.' | | '#' | '{'  '}' | '/' | '\\' );
 BOL	: ('\r' | '\n')+;
 
-string 	: (LOWERCASE_CHAR | UPPERCASE_CHAR | SYMBOL | SPACE)*;
+variable_decl
+	: (LOWERCASE_CHAR | UPPERCASE_CHAR | '.')+;	
+
+variable: (options {greedy=false} : 
+	'#{'
+	variable_decl
+	'}');	
+
+string 	: (LOWERCASE_CHAR | UPPERCASE_CHAR | SYMBOL | SPACE | variable)+;
 
 quotedstring
 	:
-	('"' | '\'')
-	string
-	('"' | '\'')
-	;
+	('"')
+	string?
+	('"')
+	;	
 
 name : LOWERCASE_CHAR+;
 value	:quotedstring;
@@ -38,7 +43,6 @@ value	:quotedstring;
 id : '#' (LOWERCASE_CHAR | UPPERCASE_CHAR | '-')+;	
 classname : '.' ( LOWERCASE_CHAR | UPPERCASE_CHAR | '-')+;
 classes	: classname+;
-
 	
 	
 attribute 
@@ -61,10 +65,10 @@ indent 	: BOL SPACE*;
 tag	: indent name? id? classes? attributes line_text;
 
 control : indent '-' SPACE line_text;
-evaluate : indent '-' SPACE line_text;
+evaluate : indent '=' SPACE line_text;
 
-template : (tag | control)+ EOF;
+template : (tag | control | evaluate)+ EOF;
 
-test 	: control EOF;	
+test 	:  quotedstring EOF;	
 
 
