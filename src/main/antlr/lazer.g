@@ -17,7 +17,7 @@ WS
 
 SPACE 	: ' ';
 EQL 	: '=';	
-SYMBOL  : ('!'  | '$' | 'Â£' | '%' | '.' | | '#' | '{'  '}' | '/' | '\\' );
+SYMBOL  : ('!'  | '$' | '£' | '%' | '.' | | '#' | '{'  '}' | '/' | '\\' );
 BOL	: ('\r' | '\n')+;
 
 variable_decl
@@ -67,8 +67,8 @@ tag	: indent name id? classes? attributes line_text?;
 control : indent '-' SPACE line_text;
 evaluate : indent '=' SPACE line_text;
 
-template : (tag | control | evaluate)+ (SPACE | BOL)+ EOF;
+template : (tag | control | evaluate)+ (SPACE | BOL)* EOF;
 
-test 	:  tag EOF;	
+test 	:  (evaluate | control)* EOF;	
 
 
