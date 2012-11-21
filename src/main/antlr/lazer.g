@@ -62,13 +62,13 @@ line_text
 
 indent 	: BOL SPACE*;
 
-tag	: indent name? id? classes? attributes line_text;
+tag	: indent name id? classes? attributes line_text?;
 
 control : indent '-' SPACE line_text;
 evaluate : indent '=' SPACE line_text;
 
-template : (tag | control | evaluate)+ EOF;
+template : (tag | control | evaluate)+ (SPACE | BOL)+ EOF;
 
-test 	:  quotedstring EOF;	
+test 	:  tag EOF;	
 
 

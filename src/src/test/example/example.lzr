@@ -4,7 +4,8 @@ html
   body
     #main
       p 
-        | Here is my paragraph. I should be 
+        | Here is my paragraph. I should be
+        |  
         | able to put anything in here until it 
         br
         span.bold This is in bold
@@ -16,7 +17,7 @@ html
           span This only appears if valid
         - else
           span appears if not valid
-        = 
+        = render 
       p Heres another p title
       ul
         li#id.class:  a href="some/ref"
