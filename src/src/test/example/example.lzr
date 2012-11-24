@@ -20,7 +20,7 @@ html
         = render 
       p Heres another p title
       ul
-        li#id.class:  a href="some/ref"
+        li#id.class: a href="some/ref"
 
 
 html
@@ -28,16 +28,21 @@ html
   title This is my title
  body  
   #someDiv.aclass
-   p This is a string #{having.variable} with "some quoted string" "and another one" and lots of other chars
-   = (some-clojure (+ 1 some.variable))
-   - if some.variable
-     p My value is #{some.variable}
-   - else
-     p Nothing is set
-   - for-each item in some.collection
-     p #{item.value}
-   - else
-     p There is nothing in this collection
+   div 
+    | This is a string #{having.variable} with "some quoted string" "and another one" and lots of other chars
+    = (some-clojure (+ 1 some.variable))
+    - some.variable
+      p My value is #{some.variable}
+    - else
+      p Nothing is set
+    - for-each item in some.collection
+      p #{item.value}
+    - else
+      p There is nothing in this collection
+
+// i18n:
+
+body.someDiv.aclass.div.p : "Il sono stringi italiano con #{having.variable}"
 
 p Without id or classes
 p#withId

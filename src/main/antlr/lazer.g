@@ -9,6 +9,7 @@ tokens {
 
 LOWERCASE_CHAR 	: 'a'..'z';
 UPPERCASE_CHAR  : 'A'..'Z';
+NUMBER	: '0'..'9';	
 	
 
 WS  
@@ -22,7 +23,7 @@ PIPE 	: '|';
 COLON 	: ':';
 BOL	: ('\r' | '\n')+;
 
-symbol  : ('!'  | '$' | '£' | '%' | '.'  | '#' | '{' | '}' | '/' | '\\' | '[' | ']' | '(' | ')' |  '\'');
+symbol  : ('!' | '@' | '$' | '£' | '%' | '.'  | '#' | '{' | '}' | '/' | '\\' | '[' | ']' | '(' | ')' |  '\'');
 
 variable_decl
 	: (LOWERCASE_CHAR | UPPERCASE_CHAR | '.')+;	
@@ -32,7 +33,7 @@ variable: (options {greedy=false} :
 	variable_decl
 	'}');	
 
-string 	: (EQL | MINUS | COLON | LOWERCASE_CHAR | SPACE | UPPERCASE_CHAR | symbol | variable)+;
+string 	: (EQL | MINUS | COLON | PIPE | LOWERCASE_CHAR | SPACE | UPPERCASE_CHAR | symbol | variable)+;
 
 quotedstring
 	: (options {greedy=false} :
@@ -41,7 +42,7 @@ quotedstring
 	('"'))
 	;	
 
-name : LOWERCASE_CHAR+;
+name : ((LOWERCASE_CHAR)+ | (LOWERCASE_CHAR NUMBER));
 value	:quotedstring;
 
 id : '#' (LOWERCASE_CHAR | UPPERCASE_CHAR | MINUS)+;	
@@ -79,6 +80,6 @@ continuation : indent PIPE line_text;
 
 template : (inline_tag | indented_tag | control | evaluate | continuation)+ (SPACE | BOL)* EOF;
 
-test 	:  inline_tag EOF;	
+test 	:  name EOF;	
 
 
