@@ -18,6 +18,7 @@ WS
 SPACE 	: ' ';
 EQL 	: '=';
 MINUS   : '-';	
+PIPE 	: '|';	
 BOL	: ('\r' | '\n')+;
 
 symbol  : ('!'  | '$' | '£' | '%' | '.'  | '#' | '{' | '}' | '/' | '\\' | '[' | ']' | ':' | '(' | ')' |  '\'');
@@ -64,13 +65,14 @@ line_text
 
 indent 	: BOL SPACE*;
 
-tag	: indent ((name id) | id | name) classes? attributes line_text?;
+tag	: indent ((((name id) | id | name) classes?) | classes) attributes line_text?;
 
 control : indent MINUS SPACE line_text;
 evaluate : indent EQL SPACE line_text;
+continuation : indent PIPE line_text;
 
-template : (tag | control | evaluate)+ (SPACE | BOL)* EOF;
+template : (tag | control | evaluate | continuation)+ (SPACE | BOL)* EOF;
 
-test 	:  tag EOF;	
+test 	:  continuation EOF;	
 
 
