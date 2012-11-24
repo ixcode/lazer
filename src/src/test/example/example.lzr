@@ -1,6 +1,6 @@
 html
   head
-    title This is my title which has some p stuff and other head tags
+    title This is my title #{some.variable} which has some p stuff and other head tags
   body
     #main
       p 

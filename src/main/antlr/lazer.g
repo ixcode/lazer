@@ -19,9 +19,10 @@ SPACE 	: ' ';
 EQL 	: '=';
 MINUS   : '-';	
 PIPE 	: '|';	
+COLON 	: ':';
 BOL	: ('\r' | '\n')+;
 
-symbol  : ('!'  | '$' | '£' | '%' | '.'  | '#' | '{' | '}' | '/' | '\\' | '[' | ']' | ':' | '(' | ')' |  '\'');
+symbol  : ('!'  | '$' | '£' | '%' | '.'  | '#' | '{' | '}' | '/' | '\\' | '[' | ']' | '(' | ')' |  '\'');
 
 variable_decl
 	: (LOWERCASE_CHAR | UPPERCASE_CHAR | '.')+;	
@@ -31,7 +32,7 @@ variable: (options {greedy=false} :
 	variable_decl
 	'}');	
 
-string 	: (EQL | MINUS | LOWERCASE_CHAR | SPACE | UPPERCASE_CHAR | symbol | variable)+;
+string 	: (EQL | MINUS | COLON | LOWERCASE_CHAR | SPACE | UPPERCASE_CHAR | symbol | variable)+;
 
 quotedstring
 	: (options {greedy=false} :
@@ -65,14 +66,19 @@ line_text
 
 indent 	: BOL SPACE*;
 
-tag	: indent ((((name id) | id | name) classes?) | classes) attributes line_text?;
+tag_declaration	: ((((name id) | id | name) classes?) | classes);	
+tag	: tag_declaration attributes line_text?;
+indented_tag : indent tag;
+
+
+inline_tag: indent tag_declaration COLON SPACE tag;	
 
 control : indent MINUS SPACE line_text;
 evaluate : indent EQL SPACE line_text;
 continuation : indent PIPE line_text;
 
-template : (tag | control | evaluate | continuation)+ (SPACE | BOL)* EOF;
+template : (inline_tag | indented_tag | control | evaluate | continuation)+ (SPACE | BOL)* EOF;
 
-test 	:  continuation EOF;	
+test 	:  inline_tag EOF;	
 
 
