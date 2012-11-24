@@ -21,3 +21,20 @@ html
       p Heres another p title
       ul
         li#id.class:  a href="some/ref"
+
+
+html
+ head
+  title This is my title
+ body  
+  div#someDiv.aclass
+   p This is a string #{having.variable} with "some quoted string" "and another one" and lots of other chars
+   = (some-clojure (+ 1 some.variable))
+   - if some.variable
+     p My value is #{some.variable}
+   - else
+     p Nothing is set
+   - for-each item in some.collection
+     p #{item.value}
+   - else
+     p There is nothing in this collection

@@ -16,9 +16,11 @@ WS
   ;
 
 SPACE 	: ' ';
-EQL 	: '=';	
-SYMBOL  : ('!'  | '$' | '£' | '%' | '.' | | '#' | '{'  '}' | '/' | '\\' );
+EQL 	: '=';
+MINUS   : '-';	
 BOL	: ('\r' | '\n')+;
+
+symbol  : ('!'  | '$' | '£' | '%' | '.'  | '#' | '{' | '}' | '/' | '\\' | '[' | ']' | ':' | '(' | ')' |  '\'');
 
 variable_decl
 	: (LOWERCASE_CHAR | UPPERCASE_CHAR | '.')+;	
@@ -28,20 +30,20 @@ variable: (options {greedy=false} :
 	variable_decl
 	'}');	
 
-string 	: (LOWERCASE_CHAR | UPPERCASE_CHAR | SYMBOL | SPACE | variable)+;
+string 	: (EQL | MINUS | LOWERCASE_CHAR | SPACE | UPPERCASE_CHAR | symbol | variable)+;
 
 quotedstring
-	:
+	: (options {greedy=false} :
 	('"')
 	string?
-	('"')
+	('"'))
 	;	
 
 name : LOWERCASE_CHAR+;
 value	:quotedstring;
 
-id : '#' (LOWERCASE_CHAR | UPPERCASE_CHAR | '-')+;	
-classname : '.' ( LOWERCASE_CHAR | UPPERCASE_CHAR | '-')+;
+id : '#' (LOWERCASE_CHAR | UPPERCASE_CHAR | MINUS)+;	
+classname : '.' ( LOWERCASE_CHAR | UPPERCASE_CHAR | MINUS)+;
 classes	: classname+;
 	
 	
@@ -58,17 +60,17 @@ attributes
 	;
 
 line_text 
-	: (options {greedy=false;} : string);
+	: (options {greedy=false;} : (string | quotedstring)+);
 
 indent 	: BOL SPACE*;
 
-tag	: indent name id? classes? attributes line_text?;
+tag	: indent ((name id?) | id) classes? attributes line_text?;
 
-control : indent '-' SPACE line_text;
-evaluate : indent '=' SPACE line_text;
+control : indent MINUS SPACE line_text;
+evaluate : indent EQL SPACE line_text;
 
 template : (tag | control | evaluate)+ (SPACE | BOL)* EOF;
 
-test 	:  (evaluate | control)* EOF;	
+test 	:  tag EOF;	
 
 
