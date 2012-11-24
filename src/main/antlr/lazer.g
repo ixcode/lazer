@@ -64,7 +64,7 @@ line_text
 
 indent 	: BOL SPACE*;
 
-tag	: indent ((name id?) | id) classes? attributes line_text?;
+tag	: indent ((name id) | id | name) classes? attributes line_text?;
 
 control : indent MINUS SPACE line_text;
 evaluate : indent EQL SPACE line_text;

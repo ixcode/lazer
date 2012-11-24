@@ -14,9 +14,9 @@ html
         | And some more stuff
         | With  more lines
         - date
-          span This only appears if valid
+          span This only appears if #{date} is not blank
         - else
-          span appears if not valid
+          span appears if blank
         = render 
       p Heres another p title
       ul
@@ -27,7 +27,7 @@ html
  head
   title This is my title
  body  
-  div#someDiv.aclass
+  #someDiv.aclass
    p This is a string #{having.variable} with "some quoted string" "and another one" and lots of other chars
    = (some-clojure (+ 1 some.variable))
    - if some.variable
@@ -38,3 +38,13 @@ html
      p #{item.value}
    - else
      p There is nothing in this collection
+
+p Without id or classes
+p#withId
+p.withClasses
+p#with.both
+
+.claSses.only
+#idOnly
+
+#id.and-classes.class
