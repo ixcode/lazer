@@ -21,7 +21,7 @@ EQL 	: '=';
 MINUS   : '-';	
 PIPE 	: '|';	
 COLON 	: ':';
-BOL	: ('\r' | '\n')+;
+BOL	: ('\r' | '\n');
 
 symbol  : ('!' | '@' | '$' | '£' | '%' | '.'  | '#' | '{' | '}' | '/' | '\\' | '[' | ']' | '(' | ')' |  '\'');
 
@@ -65,7 +65,7 @@ attributes
 line_text 
 	: (options {greedy=false;} : (string | quotedstring)+);
 
-indent 	: BOL SPACE*;
+indent 	: BOL+ SPACE*;
 
 tag_declaration	: ((((name id) | id | name) classes?) | classes);	
 tag	: tag_declaration attributes line_text?;
