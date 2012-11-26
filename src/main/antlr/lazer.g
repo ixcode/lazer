@@ -71,6 +71,9 @@ tag_declaration	: ((((name id) | id | name) classes?) | classes);
 tag	: tag_declaration attributes line_text?;
 indented_tag : indent tag;
 
+embedded_code_line : indent line_text;
+embedded_code : indent name COLON (embedded_code_line)+ BOL;	
+
 
 inline_tag: indent tag_declaration COLON SPACE tag;	
 
@@ -80,6 +83,6 @@ continuation : indent PIPE line_text;
 
 template : (inline_tag | indented_tag | control | evaluate | continuation)+ (SPACE | BOL)* EOF;
 
-test 	:  name EOF;	
+test 	:  embedded_code EOF;	
 
 
