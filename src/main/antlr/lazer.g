@@ -72,7 +72,7 @@ tag	: tag_declaration attributes line_text?;
 indented_tag : indent tag;
 
 embedded_code_line : indent line_text;
-embedded_code : indent name COLON (embedded_code_line)+ BOL;	
+embedded_code : indent name COLON SPACE '{' (embedded_code_line)+ indent '}' BOL;	
 
 
 inline_tag: indent tag_declaration COLON SPACE tag;	
@@ -81,8 +81,8 @@ control : indent MINUS SPACE line_text;
 evaluate : indent EQL SPACE line_text;
 continuation : indent PIPE line_text;
 
-template : (inline_tag | indented_tag | control | evaluate | continuation)+ (SPACE | BOL)* EOF;
+template : (embedded_code | inline_tag | indented_tag | control | evaluate | continuation)+ (SPACE | BOL)* EOF;
 
-test 	:  embedded_code EOF;	
+test 	:  (embedded_code | indented_tag | inline_tag)+ EOF;	
 
 

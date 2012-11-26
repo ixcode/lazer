@@ -26,6 +26,11 @@ html
 html
  head
   title This is my title
+  javascript: {
+   alert('Lazer supports embedded javascript!')
+   alert('with more than one line')
+  }
+
  body  
   #someDiv.aclass
    div 
