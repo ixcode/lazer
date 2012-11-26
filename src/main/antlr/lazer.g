@@ -33,7 +33,7 @@ variable: (options {greedy=false} :
 	variable_decl
 	'}');	
 
-string 	: (EQL | MINUS | COLON | PIPE | LOWERCASE_CHAR | SPACE | UPPERCASE_CHAR | symbol | variable)+;
+string 	: (EQL | MINUS | COLON | PIPE | LOWERCASE_CHAR | SPACE | UPPERCASE_CHAR | NUMBER | symbol | variable)+;
 
 quotedstring
 	: (options {greedy=false} :
